@@ -193,32 +193,11 @@ Using cromwell.
 ```
 java -jar cromwell.jar <action> <parameters>
 ```
+Cromwell is an execution engine written in Java and supports running WDL.
+Running WDL on Cromwell Locally
+```
+java -jar Cromwell.jar run myWorkflow.wdl --inputs myWorkflow_inputs.json
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## References
+[https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL]
