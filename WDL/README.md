@@ -46,6 +46,7 @@ input: task_var1=workflow_var1, task_var2=workflow_var2,..
 call my_task as task_alias{
 input: task_var1=workflow_var1, task_var2=workflow_var2,..
 }
+```
 
 
 
