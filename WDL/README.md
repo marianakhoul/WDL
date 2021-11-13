@@ -25,6 +25,60 @@ task task_A{...}
 task task_B{...}
 ```
 
+### Call
+
+The _call_ component is used in the workflow body to specify a particular _task_ to be executed.
+In the simplest form, the _call_ only needs a _task_ name. It can also take in input variables for the _task_, and call the _task_ by an alias name. The alias allows the _task_ to be run multiple times with different parameters within the same workflow.
+
+Order of the _call_ statements in the workflow is independent on the order of their execution. It depends on the dependencies between the _tasks_.
+
+Examples:
+```
+# in the simplest form
+call my_task
+
+# with input variables
+call my_task {
+input: task_var1=workflow_var1, task_var2=workflow_var2,..
+}
+
+# with an alias and input variables
+call my_task as task_alias{
+input: task_var1=workflow_var1, task_var2=workflow_var2,..
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
