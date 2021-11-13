@@ -74,6 +74,25 @@ workflow myWorkflowName{
 ```
 
 ## Core task-level components: _command_ and _output_
+Inside the _task_ definition, we have the _command_, which can be any command line that you can run in a terminal shell, and the _output_ that identifies which part of the _command_ constitutes its output.
+
+Example:
+```
+task task_A{
+
+File ref
+File in
+String id
+
+command {
+}
+runtime{
+}
+output{
+}
+
+}
+```
 
 
 
