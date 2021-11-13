@@ -172,16 +172,27 @@ task task_B{...}
 Declare the variables in the workflow body. To link them to the _tasks_ need to add them in the _call_ using the input: command. If task_B needs task_A output as input, syntax is task_name.output_variable.
 Tn the above example, it is task_A.out
 
-## Add Plumbing
-This is how we chain tasks together.
+## Validate Syntax
 
-### Linear Chaining
-Simplest way to chain tasks together. Output of one _task_ is the input of another.
+WDL comes with a utility toolkit called wdltool that includes syntax validation.
+```
+$ java -jar wdltool.jar validate myWorkflow.wdl
+```
+For more information: [https://github.com/broadinstitute/wdltool]
 
-<img width="787" alt="Screen Shot 2021-11-13 at 4 03 24 PM" src="https://user-images.githubusercontent.com/31465978/141658996-09e9ada2-960f-4763-bd02-8929b4aca8f6.png">
+## Specify Inputs
+Can generate an input file using wdltools.
+```
+java -jar wdltool.jar inputs myWorkflow.wdl > myWorkflow_inputs.json
+```
+The inputs will have the following pattern:
+"<workflow name>.<task name>.<variable name>": "<variable type>"
 
-
-
+## Execute
+Using cromwell.
+```
+java -jar cromwell.jar <action> <parameters>
+```
 
 
 
