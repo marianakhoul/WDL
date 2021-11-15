@@ -1,5 +1,5 @@
 ##
-## My first WDL?CROM workflow
+## My first WDL/CROM workflow
 ##
 ## Description:
 ## This WDL workflow will align paired-end sequences of a sample to
