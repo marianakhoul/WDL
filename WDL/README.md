@@ -74,6 +74,7 @@ workflow myWorkflowName{
 
 ### Core task-level components: _command_ and _output_
 Inside the _task_ definition, we have the _command_, which can be any command line that you can run in a terminal shell, and the _output_ that identifies which part of the _command_ constitutes its output.
+_runtime_ allows you to use a docker image to run the task in. Can also specify the CPUs and memory needed.
 
 Example:
 ```
