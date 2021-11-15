@@ -1,5 +1,6 @@
 ## Use double '#' for workflow-level comments
 ## Introductory workflow
+## Reference: https://github.com/openwdl/learn-wdl
 
 # write the WDL version number 'version 1.0' -- 1
 # possible to write 'WDL developent' as a version number as well
