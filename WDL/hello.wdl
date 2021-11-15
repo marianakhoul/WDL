@@ -28,7 +28,7 @@ task WriteGreeting {
     }
     
     runtime {    
-            # Use this container, pull from DockerHub   
-            docker: "ubuntu:latest"    
+       # Use this container, pull from DockerHub   
+       docker: "ubuntu:latest"    
        } 
 }
