@@ -107,14 +107,3 @@ task sortSam {
 ## Execute using Cromwell: java -jar $CROMWELLPATH/cromwell-${version}.jar run bwaAln.wdl --inputs bwaAln.inputs.json
 ##
 ## Done!
-
-
-
-
-
-
-
-
-
-
-
