@@ -17,6 +17,12 @@
 ## Now we can write the command part of the task.
 ## Need to plug in the declared variables into the correct places within the command component of the task.
 ## The command has an -o option, but for the execution engine (Cromwell) to recognize the outputs, we need to specify them in the outputs{} component.
+##
+## Next steps:
+## Validate the WDL Script before running: java -jar wdltool.jar validate helloHaplotypeCaller.wdl
+## Generate the input file: java -jar wdltool.jar inputs helloHaplotypeCaller.wdl > helloHaplotypeCaller_inputs.json 
+## Open the helloHaplotypeCaller_inputs.json file and replace "Type" with the absolute path to the files and tool locations
+## Run the command: java -jar cromwell.jar run helloHaplotypeCaller.wdl helloHaplotypeCaller_inputs.json 
 
 
 # WORKFLOW DEFINITION 
@@ -45,10 +51,11 @@ task haplotypeCaller {
    -T HaplotypeCaller \
    -R ${RefFasta} \
    -I ${inputBam} \
-   -o ${sampleName}.raw.indels.snps.vcf
+   -O ${sampleName}.raw.indels.snps.vcf
    }
    
    outputs{
    File rawVCF = "${sampleName}.raw.indels.snps.vcf" 
    }
 }
+
