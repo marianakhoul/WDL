@@ -201,4 +201,6 @@ java -jar Cromwell.jar run myWorkflow.wdl --inputs myWorkflow_inputs.json
 ```
 
 ## References
-[https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL]
+https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
+https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#an-example-wdl-workflow
+
