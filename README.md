@@ -186,9 +186,7 @@ Can generate an input file using wdltools.
 ```
 java -jar wdltool.jar inputs myWorkflow.wdl > myWorkflow_inputs.json
 ```
-The inputs will have the following pattern:
-"<workflow name>.<task name>.<variable name>": "<variable type>"
-
+  
 ## Execute
 Using cromwell.
 ```
@@ -199,8 +197,71 @@ Running WDL on Cromwell Locally
 ```
 java -jar Cromwell.jar run myWorkflow.wdl --inputs myWorkflow_inputs.json
 ```
-  
+ 
 ## More Syntax
+
+Primitive data types exist in WDL
++ Boolean
++ Int
++ Float
++ String
++ File
++ Directory
+
+Optional and None
+a ? indicates if the value is allowed to be undefined.
+Examples:
+```
+Int certainly_five = 5      # an non-optional declaration
+Int? maybe_five_and_is = 5  # a defined optional declaration
+
+# the following are equivalent undefined optional declarations
+String? maybe_five_but_is_not
+String? maybe_five_but_is_not = None
+
+Boolean test_defined = defined(maybe_five_but_is_not) # Evaluates to false
+Boolean test_defined2 = defined(maybe_five_and_is)    # Evaluates to true
+Boolean test_is_none = maybe_five_but_is_not == None  # Evaluates to true
+Boolean test_not_none = maybe_five_but_is_not != None # Evaluates to false
+```
+
+We can also create Arrays. Arrays are ordered lists of elemets of the same type.
+```
+Array[File] files = ["/path/to/file1", "/path/to/file2"]
+File f = files[0]  # evaluates to "/path/to/file1"
+
+Array[Int] empty = []
+# this causes an error - trying to access a non-existent array element
+Int i = empty[0]
+```
+When declaring an Array using +, it indicates that the array can not be empty and needs at least 1 element.
+In the below example, an array of files called fastqs must have at least 1 fastq file.
+Depending on the length of the array, we know if it's paired ended or single ended reads for the alignment method. Output is a bam file called output.bam
+```
+task align {
+  input {
+    Array[File]+ fastqs
+  }
+  String sample_type = if length(fastqs) == 1 then "--single-end" else "--paired-end"
+  command <<<
+  ./align ~{sample_type} ~{sep(" ", fastqs)} > output.bam
+  >>>
+  output {
+    File bam = "output.bam"
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## References
