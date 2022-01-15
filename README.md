@@ -330,7 +330,23 @@ task write_array {
   >>>
 }
 ```
+The runtime section of the task defines a set of key/value pairs that are the minimum requirements needed to run the task. If the engine can't provision the requested resources, the task will fail. 
+```
+task test {
+  input {
+    String ubuntu_version
+  }
 
+  command <<<
+    python script.py
+  >>>
+  
+  runtime {
+    container: ubuntu_version
+  }
+}
+```
+"The container attribute accepts a URI string that describes a location where the execution engine can attempt to retrieve a container image to execute the task. The format of a container URI string is protocol://location, where protocol is one of the protocols supported by the execution engine. Execution engines must, at a minimum, support the docker:// protocol, and if no protocol is specified, it is assumed to be docker://."[2]
 
 
 
@@ -346,7 +362,7 @@ task write_array {
 
 
 ## References
-1. https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
-2. https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#an-example-wdl-workflow
+[1] https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
+[2] https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#an-example-wdl-workflow
 
 
