@@ -347,22 +347,46 @@ task test {
 }
 ```
 "The container attribute accepts a URI string that describes a location where the execution engine can attempt to retrieve a container image to execute the task. The format of a container URI string is protocol://location, where protocol is one of the protocols supported by the execution engine. Execution engines must, at a minimum, support the docker:// protocol, and if no protocol is specified, it is assumed to be docker://."[2]
+```
+task single_image_test {
+  #....
+  runtime {
+    container: "ubuntu:latest"
+  }
+```
+Images defined as ubuntu:laters will reder to a Docker image living on DockerHub.
 
+Scatter-gather is. a common parallelization pattern. Given a collection of inputs (array) the "scatter"step executes the set of operations on each input in parallel. In the "gather" step, the outputs of all the individual "scatter" tasks are collected into the final output.
 
-
-
-
-
-
-
-
-
-
-
+WDL uses the "scatter-gather" functionality by using a scatter block. 
+1. It needs 3 essentials parts. An array to be scattered over.
+2. A scatter variable which is an identifier that will hold the input value in each iteration of the scatter. It is always of type Array.
+3. A body that contains nested statements.
+```
+workflow scatter_example {
+  input {
+    Array[String] name_array = ["Joe", "Bob", "Fred"]
+    String salutation = "hello"
+  }
+  
+  # 'name_array' is an identifier expression that evaluates
+  #   to an Array of Strings.
+  # 'name' is a String declaration that will have a 
+  #   different value - one of the elements of name_array - 
+  #   during each iteration
+  scatter (name in name_array) {
+    # these statements are evaluated for each different value
+    # of 'name'
+    String greeting = "~{salutation} ~{name}"
+    call say_hello { input: greeting = greeting }
+  }
+}
+```
 
 
 ## References
-[1] https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
-[2] https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#an-example-wdl-workflow
+1. https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
+2. https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#an-example-wdl-workflow
+
 
 
