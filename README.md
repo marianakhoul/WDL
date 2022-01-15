@@ -199,6 +199,9 @@ Running WDL on Cromwell Locally
 ```
 java -jar Cromwell.jar run myWorkflow.wdl --inputs myWorkflow_inputs.json
 ```
+  
+## More Syntax
+
 
 ## References
 https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
