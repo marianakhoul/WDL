@@ -346,6 +346,7 @@ task write_array {
 
 
 ## References
-https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
-https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#an-example-wdl-workflow
+1. https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
+2. https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#an-example-wdl-workflow
+
 
