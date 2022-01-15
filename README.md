@@ -234,7 +234,7 @@ Array[Int] empty = []
 # this causes an error - trying to access a non-existent array element
 Int i = empty[0]
 ```
-When declaring an Array using +, it indicates that the array can not be empty and needs at least 1 element.
+When declaring an Array using +, it indicates that the array can not be empty and needs at least 1 element. You can use + and ? together for Arrays.
 In the below example, an array of files called fastqs must have at least 1 fastq file.
 Depending on the length of the array, we know if it's paired ended or single ended reads for the alignment method. Output is a bam file called output.bam
 ```
@@ -251,6 +251,87 @@ task align {
   }
 }
 ```
+
+A Pair[X,Y] represents 2 associated values which can be of different types.
+```
+Pair[Int, Array[String]] data = (5, ["hello", "goodbye"])
+Int five = p.left  # evaluates to 5 I think this should be data.left
+String hello = data.right[0]  # evaluates to "hello"
+```
+
+Map[P,Y] represents a dictionary key-value pair. All keys must be of the same type and all values must be of the same type. Order when elements are added is preserved.
+```
+Map[Int, Int] int_to_int = {1: 10, 2: 11} # initiate a dictionary called int_to_int with these values
+Map[String, Int] string_to_int = { "a": 1, "b": 2 } # initiate a different dictionary where keys are strings
+Map[File, Array[Int]] file_to_ints = {
+  "/path/to/file1": [0, 1, 2],
+  "/path/to/file2": [9, 8, 7]
+} # can have values as an array.
+Int b = string_to_int["b"]  # evaluates to 2
+Int c = string_to_int["c"]  # error - "c" is not a key in the map
+```
+
+Can import URL to WDL scripts to use inside your code too
+```
+import "http://example.com/lib/analysis_tasks" as analysis
+import "http://example.com/lib/stdlib.wdl"
+
+workflow wf {
+  input {
+    File bam_file
+  }
+  # file_size is from "http://example.com/lib/stdlib"
+  call stdlib.file_size {
+    input: file=bam_file
+  }
+  call analysis.my_analysis_task {
+    input: size=file_size.bytes, file=bam_file
+  }
+}
+```
+
+~{*expression*} do things to the variables assigned based on the expression
+```
+Array[File]  a
+~{sep=" " a} # sep the elements of array a by space
+```
+
+Command section is the only required part of the task. Syntax.
+```
+# HEREDOC style - this way is preferred
+command <<< ... >>> # if adding placeholder value need to use ~{}
+
+# older style - may be preferable in some cases
+command { ... } # if adding placeholder value, can use ~{} or ${}
+
+task test {
+  input {
+    File infile
+  }
+  command <<<
+    cat ~{infile}
+  >>>
+  ....
+}
+```
+
+write_array function
+```
+task write_array {
+  input {
+    Array[String] str_array
+  }
+  command <<<
+    # the "write_lines" function writes each string in an array
+    # as a line in a temporary file, and returns the path to that
+    # file, which can then be referenced by other commands such as 
+    # the unix "cat" command
+    cat ~{write_lines(str_array)}
+  >>>
+}
+```
+
+
 
 
 
