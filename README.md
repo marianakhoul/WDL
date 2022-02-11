@@ -400,7 +400,7 @@ workflow scatter_example {
 ## References
 1. https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
 2. https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#an-example-wdl-workflow
-3. https://t.co/JwKaFxb5D5
+3. https://www.oreilly.com/library/view/genomics-in-the/9781491975183/
 
 
 
