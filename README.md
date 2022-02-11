@@ -6,7 +6,14 @@ It also contains many of the best practice applications required for production 
 A section at the end that focuses mainly on some built in WDL functions used for genomic workflows.
 
 ## Breakdown of the README.md file
-1. [Base Structure of the WDL file](#Base-Structure)
+1. [Base structure of the WDL file](#Base-Structure)
+2. [Adding variables into your workflow and tasks](#Add-Variables)
+3. [Validating the syntax of your WDL file](#Validate-Syntax)
+4. [Generating the input.json file with variables to fill in](#Specify-Inputs)
+5. [Run the WDL script using Cromwell execution engine](#Execute)
+6. [Basic syntax for building your workflow and tasks](#More-Syntax)
+7. []()
+8. [References](#References)
 
 ## Base Structure
 
