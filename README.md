@@ -417,6 +417,7 @@ Array[String] lines = read_lines(input_file)
 ### basename()
 The function removes everything except the last part of the string. For example, if you are passing a relative file location, removes everything before the file name.
 Use this function to grab the sample name of the files you're working so that all file outputs will be named using the same "base name".
+
 Example on how to use this function:
 
 Removing the relative path before the file name:
@@ -434,6 +435,7 @@ String bam_output = basename(input_file,".fq") + ".bam"
 
 ### scatter()
 Used for parallelizing the operations on tasks called without the scatter() block. The scatter() function runs independent instances of the call as opposed to a for loop which runs linearly. We can merge the outputs of the parallele jobs in a step after the scatter(). This is called scatter-gather parallelism. The output of 1 call of the task inside scatter gather will return output based on what was specified in the task. When run inside of scatter(), all the runs of the tasks outputs will be stored into an Array.
+
 Examples on how to use this function and gather:
 ```
 # Call HaplotypeCaller inside the scatter where the HaplotypeCaller will run multiple processes in parallele based on the variable (line) we want to run multiple rounds on.
@@ -481,7 +483,8 @@ Used for subsitution in strings. The syntax for the function is:
 sub("string to modify","substring or pattern we want to replace","what to replace with")
 *String to modify*: is the original string you currently have
 *Substring or pattern we want to replace*: is the part we want to modify 
-*What to replace with*: is value we want to replace the pattern or substring with
+*What to replace with*: is value we want to replace the pattern or substring with.
+
 Example:
 ```
 #Grab the file extension of the input file
@@ -514,7 +517,12 @@ String sample_basename = if is_fastq then basename(input_file,".fastq") else bas
 ```
 
 ### select_first()
+After using a condition, or when declaring variables that might not be input into the workflow, how does the workflow know what to work with?
+Use select_first() to use what is available.
+Example:
+```
 
+```
 
 ## References
 1. https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
