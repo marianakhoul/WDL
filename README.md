@@ -519,10 +519,27 @@ String sample_basename = if is_fastq then basename(input_file,".fastq") else bas
 ### select_first()
 After using a condition, or when declaring variables that might not be input into the workflow, how does the workflow know what to work with?
 Use select_first() to use what is available.
+
 Example:
 ```
-
+scatter(...){
+  call HaplotypeCaller {
+    inputs:
+      input_bam = select_first(FastqToBam.output_bam,input_bam) #If had to go through conversion, use that file. Else, if it doesn't exist, use the input_bam file.
+      ...
+  }
+}
 ```
+Another example is if you want to allow users (or yourself) to use different Docker images or input variables.
+```
+String? gatk_docker_override
+String gatk_docker = select_first(gatk_docker_override,"broad-institute/gatk:latest")
+```
+The optionally marked declared variable gatk_docker_override will allow you to override the Docker container images used to run GATK tasks.
+The above example states the gatk_docker to be used is either the gatk_docker_override or if that wasn't provided, then use the "broad-institute/gatk:latest" image.
+
+### struct variables
+struct which is short for construct is a custom-built variable built by the person creating the WDL. It allows for a group of variables that travel together to be grouped into one variable instead of redeclaring them all individually. 
 
 ## References
 1. https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
