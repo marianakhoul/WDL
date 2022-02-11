@@ -12,7 +12,7 @@ A section at the end that focuses mainly on some built in WDL functions used for
 4. [Generating the input.json file with variables to fill in](#Specify-Inputs)
 5. [Run the WDL script using Cromwell execution engine](#Execute)
 6. [Basic syntax for building your workflow and tasks](#More-Syntax)
-7. [Most common used functions for genomic workflows and syntax](#Genomics-workflow-most-commonly-used-functions-and-syntax)
+7. [Most commonly used functions for genomic workflows and syntax](#Genomics-workflow-most-commonly-used-functions-and-syntax)
 8. [References](#References)
 
 ## Base Structure
@@ -204,6 +204,7 @@ The variable in the workflow will have the following structure:
 ```
 "workflow.task.variable_name":"Variable Value"
 ```
+Strings should have double quotes around the values, however, Arrays and Booleans shouldn't have double quotes. Inputs inside the Array[String] can have double quotes like ["cat","dog"].
 If passing files to the variable names, the path to the file is relative to the working directory where your WDL and inputs.json files are.
 
 ## Execute
@@ -406,11 +407,60 @@ I am mainly using this repository to store WDL scripts and functions related to 
 ### read_string()
 This is a function that reads in the lines of a file into individual string lines.
 Examples on how to use this function:
+
+Storing file content into an array with new lines being the delimiter that sparates the lines.
+```
+Array[String] lines = read_lines(input_file)
+```
+
+
 ### basename()
 Use this function to grab the sample name of the files you're working so that all file outputs will be named using the same "base name".
 Example on how to use this function:
 
-### 
+Getting the base name of the input file to use as a naming convention for all the files generated during the workflow.
+```
+String base_file_name = basename(input_file,".bam")
+```
+Adding specific output file extensions 
+```
+String bam_output = basename(input_file,".fq") + ".bam"
+```
+
+### scatter()
+Used for parallelizing the operations on tasks called without the scatter() block. The scatter() function runs independent instances of the call as opposed to a for loop which runs linearly. We can merge the outputs of the parallele jobs in a step after the scatter(). This is called scatter-gather parallelism. The output of 1 call of the task inside scatter gather will return output based on what was specified in the task. When run inside of scatter(), all the runs of the tasks outputs will be stored into an Array.
+Examples on how to use this function and gather:
+```
+# Call HaplotypeCaller inside the scatter where the HaplotypeCaller will run multiple processes in parallele based on the variable (line) we want to run multiple rounds on.
+scatter(line in lines){
+  call HaplotypeCaller{
+    ...
+    intervals = line
+    }
+}
+#Gather all the outputs into one VCF
+call MergeVCF{
+  inputs:
+    vcfs = HaplotypeCaller.output_vcf
+}
+
+task MergeVCF {
+  input {
+  ...
+  }
+  command {
+     gatk --java-options ${java_options} MergeVcfs \
+     -I ${sep=' -I ' vcfs} \ # this part here will take in multiple inputs from the vcfs Array generated from the multiple runs of the HaplotypeCaller inside scatter. HaplotypeCaller.output_vcf is an array.
+     -O ${merged_vcf_name}
+  }
+  output {
+    File merged_vcf = "${merged_vcf_name}"
+  }
+}
+```
+### Conditions
+
+### select_first()
 
 ## References
 1. https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
