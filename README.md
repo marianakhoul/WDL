@@ -1,6 +1,9 @@
 # Workflow Description Language (WDL)
 
 WDL allows you to write human readable and writable code for processing workflows.
+This repository has syntax and explanations of WDL file code snippets and structure. 
+It also contains many of the best practice applications required for production pipelines.
+A section at the end that focuses mainly on some built in WDL functions used for genomic workflows.
 
 ## Breakdown of the README.md file
 1. [Base Structure of the WDL file](#Base-Structure)
