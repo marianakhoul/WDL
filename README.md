@@ -12,7 +12,7 @@ A section at the end that focuses mainly on some built in WDL functions used for
 4. [Generating the input.json file with variables to fill in](#Specify-Inputs)
 5. [Run the WDL script using Cromwell execution engine](#Execute)
 6. [Basic syntax for building your workflow and tasks](#More-Syntax)
-7. []()
+7. [Most common used functions for genomic workflows and syntax](#Genomics-workflow-most-commonly-used-functions-and-syntax)
 8. [References](#References)
 
 ## Base Structure
@@ -395,7 +395,7 @@ workflow scatter_example {
   }
 }
 ```
-
+## Genomics workflow most commonly used functions and syntax
 
 ## References
 1. https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
