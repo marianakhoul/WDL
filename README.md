@@ -404,6 +404,7 @@ workflow scatter_example {
 ```
 ## Genomics workflow most commonly used functions and syntax
 I am mainly using this repository to store WDL scripts and functions related to NGS analysis. This section would be the most beneficial for this type of analysis.
+
 ### read_string()
 This is a function that reads in the lines of a file into individual string lines.
 Examples on how to use this function:
@@ -413,11 +414,15 @@ Storing file content into an array with new lines being the delimiter that spara
 Array[String] lines = read_lines(input_file)
 ```
 
-
 ### basename()
+The function removes everything except the last part of the string. For example, if you are passing a relative file location, removes everything before the file name.
 Use this function to grab the sample name of the files you're working so that all file outputs will be named using the same "base name".
 Example on how to use this function:
 
+Removing the relative path before the file name:
+```
+String bam_file_name = basename(input_bam)
+```
 Getting the base name of the input file to use as a naming convention for all the files generated during the workflow.
 ```
 String base_file_name = basename(input_file,".bam")
@@ -458,9 +463,58 @@ task MergeVCF {
   }
 }
 ```
+
+###  set -e and set -o pipefail
+These 2 lines of code are written at the beginning of the block of code for the command. They instruct the system how to handle errors.
+Using the 2 commands are telling the code to stop at the first error and consider the entire task as failed.
+I've seen this a lot being used with samtools, bwa and other non-GATK functions.
+```
+command {
+  set -e
+  set -o pipefail
+  ....
+}
+```
+
+### sub()
+Used for subsitution in strings. The syntax for the function is:
+sub("string to modify","substring or pattern we want to replace","what to replace with")
+*String to modify*: is the original string you currently have
+*Substring or pattern we want to replace*: is the part we want to modify 
+*What to replace with*: is value we want to replace the pattern or substring with
+Example:
+```
+#Grab the file extension of the input file
+sub(basename(input_bam),".*\\.","")
+```
+Breakdown of the above example:
+basename(input_bam) removes the relative path before the file name 
+.\*\\. get everything before the last period (included) 
+"" :replace with an empty string 
+A possible output of this could be "bam"
+
 ### Conditions
+Create If statements and call certain tasks depending on the input variables.
+If you have tasks that require .bam files but your input is a .fastq file, can run a condition to transform the fastq file into a bam file.
+Example:
+```
+if (is_fastq){
+  call FastqToBam{...}
+}
+```
+But need to create Boolean variable is_fastq which has true or false value.
+You can grab the extension of the input_file and see if it =="bam" or =="fastq" and go from there.
+```
+#This resolves to false
+Boolean is_fastq = sub(basename(input_bam),".*\\.","") == "fastq"
+```
+Can also use conditions to run basename() to get the sample_basename depending on the input_file
+```
+String sample_basename = if is_fastq then basename(input_file,".fastq") else basename(input_file,".bam")
+```
 
 ### select_first()
+
 
 ## References
 1. https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
