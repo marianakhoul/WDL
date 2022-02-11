@@ -5,6 +5,8 @@ This repository has syntax and explanations of WDL file code snippets and struct
 It also contains many of the best practice applications required for production pipelines.
 A section at the end that focuses mainly on some built in WDL functions used for genomic workflows.
 
+Note: Cromwell doesn't allow for http(s) downloads, so make sure there are no downloads written inside your WDL file.
+
 ## Breakdown of the README.md file
 1. [Base structure of the WDL file](#Base-Structure)
 2. [Adding variables into your workflow and tasks](#Add-Variables)
