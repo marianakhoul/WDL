@@ -199,7 +199,13 @@ Can generate an input file using wdltools.
 ```
 java -jar wdltool.jar inputs myWorkflow.wdl > myWorkflow_inputs.json
 ```
-  
+Inputs in the inputs.json file will have variable asignment in a key:value structure format since it is a json file.
+The variable in the workflow will have the following structure:
+```
+"workflow.task.variable_name":"Variable Value"
+```
+If passing files to the variable names, the path to the file is relative to the working directory where your WDL and inputs.json files are.
+
 ## Execute
 Using cromwell.
 ```
@@ -396,6 +402,15 @@ workflow scatter_example {
 }
 ```
 ## Genomics workflow most commonly used functions and syntax
+I am mainly using this repository to store WDL scripts and functions related to NGS analysis. This section would be the most beneficial for this type of analysis.
+### read_string()
+This is a function that reads in the lines of a file into individual string lines.
+Examples on how to use this function:
+### basename()
+Use this function to grab the sample name of the files you're working so that all file outputs will be named using the same "base name".
+Example on how to use this function:
+
+### 
 
 ## References
 1. https://support.terra.bio/hc/en-us/articles/360037117492-Getting-started-with-WDL
