@@ -3,7 +3,7 @@
 WDL allows you to write human readable and writable code for processing workflows.
 
 Breakdown of the README.md file
-1. [Base Structure of the WDL file](#Base Structure)
+1. [Base Structure of the WDL file](#Base-Structure)
 
 ## Base Structure
 
